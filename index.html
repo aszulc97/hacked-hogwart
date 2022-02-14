@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cleaning Hogwarts data</title>
+  </head>
+  <body>
+    <h1>Hogwarts students</h1>
+    <table id="list">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Middlename</th>
+          <th>Nickname</th>
+          <th>Lastname</th>
+          <th>Gender</th>
+          <th>House</th>
+          <!-- <th>Description</th>
+            <th>Age</th> -->
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <template id="student">
+      <tr>
+        <td data-field="firstname">NAME</td>
+        <td data-field="middlename">NAME</td>
+        <td data-field="nickname">NAME</td>
+        <td data-field="lastname">NAME</td>
+        <td data-field="gender">TYPE</td>
+        <td data-field="house">TYPE</td>
+        <td data-field="image"><img src="" /></td>
+        <!-- <td data-field="desc">DESCRIPTION</td>
+          <td data-field="age">AGE</td> -->
+      </tr>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
