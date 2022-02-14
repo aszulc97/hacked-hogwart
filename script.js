@@ -26,10 +26,7 @@ function loadJSON() {
 function prepareObjects(jsonStudent) {
   const student = Object.create(Student);
   let fullnameString = fixCapitalization(jsonStudent.fullname.trim());
-  let middle = fullnameString.substring(
-    fullnameString.indexOf(" ") + 1,
-    fullnameString.lastIndexOf(" ")
-  );
+  let middle = fullnameString.substring(fullnameString.indexOf(" ") + 1, fullnameString.lastIndexOf(" "));
   if (fullnameString.indexOf(" ") + 1) {
     student.firstname = fullnameString.substring(0, fullnameString.indexOf(" "));
     student.lastname = fullnameString.substring(fullnameString.lastIndexOf(" ") + 1);
@@ -66,40 +63,38 @@ function fixCapitalization(dataString) {
 function getImage(fullname) {
   let lastname = fullname.substring(fullname.lastIndexOf(" ") + 1).toLowerCase();
   let imageUrl = "/images/" + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
-  //console.log(checkExists("/images/" + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png"));
-  return imageUrl;
+  if (imageExist(imageUrl)) {
+    return imageUrl;
+  } else {
+    if (lastname.includes("-")) {
+      imageUrl = "/images/" + lastname.substring(lastname.indexOf("-") + 1) + "_" + fullname.charAt(0).toLowerCase() + ".png";
+      return imageUrl;
+    } else {
+      let firstname = fullname.substring(0, fullname.indexOf(" "));
+      imageUrl = "/images/" + lastname + "_" + firstname.toLowerCase() + ".png";
+      if (imageExist(imageUrl)) {
+        return imageUrl;
+      } else {
+        return "/images/no_pic.png";
+      }
+    }
+  }
 }
 
-//   checkExists(imageUrl, function (exists) {
-//     if (!exists) {
-//       if (lastname.includes("-")) {
-//         imageUrl =
-//           "/images/" +
-//           lastname.substring(lastname.indexOf("-") + 1) +
-//           "_" +
-//           fullname.charAt(0).toLowerCase() +
-//           ".png";
-//         console.log("nie dziala", imageUrl);
-//       }
-//     }
-//   });
-//   console.log("heja");
-//   return imageUrl;
-// }
+function imageExist(url) {
+  var img = new Image();
+  img.src = url;
+  return img.height;
+}
 
 function displayList() {
-  // clear the list
   document.querySelector("#list tbody").innerHTML = "";
-
-  // build a new list
   allStudents.forEach(displayStudent);
 }
 
 function displayStudent(student) {
-  // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
-  // set clone data
   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
   clone.querySelector("[data-field=middlename]").textContent = student.middlename;
   clone.querySelector("[data-field=nickname]").textContent = student.nickname;
@@ -107,8 +102,6 @@ function displayStudent(student) {
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=image]>img").src = student.image;
-  //   clone.querySelector("[data-field=lastname]").textContent = student.desc;
 
-  // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
