@@ -1,3 +1,25 @@
+@font-face {
+  font-family: "Parry Hotter";
+  src: url("ParryHotter.ttf") format("truetype");
+}
+
+header {
+  font-family: "Parry Hotter";
+  font-size: 2rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0.2rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 2fr 5px 1fr;
+  margin: 0 5rem;
+  background-color: #eee;
+}
+
 .hidden {
   display: none;
 }
@@ -34,7 +56,42 @@ main {
   position: relative;
 }
 
-tr:hover {
+table {
+  margin: 0 auto;
+  border-spacing: 0 5px;
+}
+
+th,
+tr td {
+  text-align: start;
+  padding: 1rem;
+}
+
+tbody tr {
+  background-color: #fff;
+  border-spacing: 1rem;
+  padding-bottom: 3rem;
+}
+
+tbody tr td:first-child,
+th:first-child {
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  padding-left: 3rem;
+}
+
+tbody tr td:last-child,
+th:last-child {
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  padding-right: 3rem;
+}
+
+table th:nth-child(3) {
+  width: 15rem;
+}
+
+tbody tr:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -59,4 +116,10 @@ tr:hover {
 .closeButton:after {
   display: inline-block;
   content: "\00d7"; /* This will render the 'X' */
+}
+
+.vl {
+  border-left: 5px solid #ddd;
+  height: 500px;
+  top: 0;
 }

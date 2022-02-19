@@ -10,6 +10,8 @@ const Student = {
   gender: "",
   house: "",
   image: "",
+  prefect: false,
+  ingu: false,
 };
 
 function start() {
@@ -94,6 +96,16 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  if (student.prefect) {
+    clone.querySelector("[data-field=prefect]").textContent = "t";
+  } else {
+    clone.querySelector("[data-field=prefect]").textContent = "f";
+  }
+  if (student.inqu) {
+    clone.querySelector("[data-field=inqu]").textContent = "t";
+  } else {
+    clone.querySelector("[data-field=inqu]").textContent = "f";
+  }
   // clone.querySelector("[data-field=image]>img").src = student.image;
   clone.querySelector("tr").addEventListener("click", function () {
     showPopUp(student);

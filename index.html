@@ -8,51 +8,60 @@
     <title>Hacked Hogwarts Student List</title>
   </head>
   <body>
-    <h1>Hogwarts Student List</h1>
-    <table id="list">
-      <thead>
+    <header>
+      <h1>Hogwarts Student List</h1>
+    </header>
+    <main>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <!-- <th>Middlename</th>
+            <th>Nickname</th> -->
+            <th>Lastname</th>
+            <th>Gender</th>
+            <th>House</th>
+            <th>Prefect</th>
+            <th>Inqu</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="vl"></div>
+      <template id="student">
         <tr>
-          <th>Firstname</th>
-          <!-- <th>Middlename</th>
-          <th>Nickname</th> -->
-          <th>Lastname</th>
-          <th>Gender</th>
-          <th>House</th>
-          <!-- <th>Description</th>
-            <th>Age</th> -->
+          <td data-field="firstname">NAME</td>
+          <!-- <td data-field="middlename">NAME</td>
+          <td data-field="nickname">NAME</td> -->
+          <td data-field="lastname">NAME</td>
+          <td data-field="gender">TYPE</td>
+          <td data-field="house">TYPE</td>
+          <!-- <td data-field="image"><img src="" /></td> -->
+          <td data-field="prefect">DESCRIPTION</td>
+          <td data-field="inqu">AGE</td>
         </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      </template>
 
-    <template id="student">
-      <tr>
-        <td data-field="firstname">NAME</td>
-        <!-- <td data-field="middlename">NAME</td>
-        <td data-field="nickname">NAME</td> -->
-        <td data-field="lastname">NAME</td>
-        <td data-field="gender">TYPE</td>
-        <td data-field="house">TYPE</td>
-        <!-- <td data-field="image"><img src="" /></td> -->
-        <!-- <td data-field="desc">DESCRIPTION</td>
-          <td data-field="age">AGE</td> -->
-      </tr>
-    </template>
-    <div class="popUp hidden">
-      <button class="closeButton"></button>
-      <div class="popupContent">
-        <div>
-          <p>Full name:</p>
-          <h1></h1>
-          <p>House:</p>
-          <h2></h2>
-        </div>
-        <div class="popupImageHolder">
-          <img src="" />
-          <button class="expellButton">Expell</button>
+      <div id="rightSide">
+        <h3>Prefects</h3>
+      </div>
+
+      <div class="popUp hidden">
+        <button class="closeButton"></button>
+        <div class="popupContent">
+          <div>
+            <p>Full name:</p>
+            <h1></h1>
+            <p>House:</p>
+            <h2></h2>
+          </div>
+          <div class="popupImageHolder">
+            <img src="" />
+            <button class="expellButton">Expell</button>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>
