@@ -26,19 +26,13 @@ function loadJSON() {
 function prepareObjects(jsonStudent) {
   const student = Object.create(Student);
   let fullnameString = fixCapitalization(jsonStudent.fullname.trim());
-  let middle = fullnameString.substring(fullnameString.indexOf(" ") + 1, fullnameString.lastIndexOf(" "));
   if (fullnameString.indexOf(" ") + 1) {
     student.firstname = fullnameString.substring(0, fullnameString.indexOf(" "));
     student.lastname = fullnameString.substring(fullnameString.lastIndexOf(" ") + 1);
   } else {
     student.firstname = fullnameString;
   }
-  if (middle.charAt(0) === '"') {
-    student.nickname = middle.substring(1, middle.length - 1);
-  } else {
-    student.middlename = middle;
-  }
-
+  student.middlename = fullnameString.substring(fullnameString.indexOf(" ") + 1, fullnameString.lastIndexOf(" "));
   student.gender = jsonStudent.gender;
   student.house = fixCapitalization(jsonStudent.house.trim());
   student.image = getImage(fullnameString);
@@ -96,12 +90,27 @@ function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
-  clone.querySelector("[data-field=middlename]").textContent = student.middlename;
-  clone.querySelector("[data-field=nickname]").textContent = student.nickname;
+  // clone.querySelector("[data-field=middlename]").textContent = student.middlename;
+  // clone.querySelector("[data-field=nickname]").textContent = student.nickname;
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
-  clone.querySelector("[data-field=image]>img").src = student.image;
+  // clone.querySelector("[data-field=image]>img").src = student.image;
+  clone.querySelector("tr").addEventListener("click", function () {
+    showPopUp(student);
+  });
 
   document.querySelector("#list tbody").appendChild(clone);
+}
+
+function showPopUp(student) {
+  // e.preventDefault();
+  document.querySelector(".popUp").classList.remove("hidden");
+  document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
+  document.querySelector("div > h2").textContent = student.house;
+  document.querySelector(".closeButton").addEventListener("click", closePopUp);
+}
+
+function closePopUp() {
+  document.querySelector(".popUp").classList.add("hidden");
 }

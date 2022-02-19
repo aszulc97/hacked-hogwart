@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cleaning Hogwarts data</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>Hacked Hogwarts Student List</title>
   </head>
   <body>
     <h1>Hogwarts students</h1>
@@ -12,8 +13,8 @@
       <thead>
         <tr>
           <th>Firstname</th>
-          <th>Middlename</th>
-          <th>Nickname</th>
+          <!-- <th>Middlename</th>
+          <th>Nickname</th> -->
           <th>Lastname</th>
           <th>Gender</th>
           <th>House</th>
@@ -27,17 +28,23 @@
     <template id="student">
       <tr>
         <td data-field="firstname">NAME</td>
-        <td data-field="middlename">NAME</td>
-        <td data-field="nickname">NAME</td>
+        <!-- <td data-field="middlename">NAME</td>
+        <td data-field="nickname">NAME</td> -->
         <td data-field="lastname">NAME</td>
         <td data-field="gender">TYPE</td>
         <td data-field="house">TYPE</td>
-        <td data-field="image"><img src="" /></td>
+        <!-- <td data-field="image"><img src="" /></td> -->
         <!-- <td data-field="desc">DESCRIPTION</td>
           <td data-field="age">AGE</td> -->
       </tr>
     </template>
-
+    <div class="popUp hidden">
+      <p>Full name:</p>
+      <h1></h1>
+      <p>House:</p>
+      <h2></h2>
+      <button class="closeButton"></button>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
