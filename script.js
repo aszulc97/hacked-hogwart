@@ -50,13 +50,13 @@ function fixCapitalization(dataString) {
       charArray[i + 1] = charArray[i + 1].charAt(0).toUpperCase();
     }
   }
-  console.log(charArray.join(""));
   return charArray.join("");
 }
 
 function getImage(fullname) {
   let lastname = fullname.substring(fullname.lastIndexOf(" ") + 1).toLowerCase();
   let imageUrl = "/images/" + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
+  console.log("height", fullname, imageExist(imageUrl));
   if (imageExist(imageUrl)) {
     return imageUrl;
   } else {
@@ -88,7 +88,6 @@ function displayList() {
 
 function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
-
   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
   // clone.querySelector("[data-field=middlename]").textContent = student.middlename;
   // clone.querySelector("[data-field=nickname]").textContent = student.nickname;
@@ -108,6 +107,7 @@ function showPopUp(student) {
   document.querySelector(".popUp").classList.remove("hidden");
   document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   document.querySelector("div > h2").textContent = student.house;
+  document.querySelector("img").src = student.image;
   document.querySelector(".closeButton").addEventListener("click", closePopUp);
 }
 

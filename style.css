@@ -10,9 +10,20 @@
   border: 0.1rem solid pink;
   border-radius: 5%;
   background-color: #fff;
-  text-align: center;
   padding: 2rem;
   min-width: 30%;
+}
+
+.popupContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popupImageHolder {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
 .popUp * {
@@ -25,6 +36,7 @@ main {
 
 tr:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 /* 
 .closeButton {
@@ -36,6 +48,13 @@ tr:hover {
   border-radius: 0.9rem;
   padding: 0.4rem 0.6rem;
 } */
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 100%;
+  border: 0.5px solid #ddd;
+}
 
 .closeButton:after {
   display: inline-block;

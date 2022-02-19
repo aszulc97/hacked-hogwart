@@ -8,7 +8,7 @@
     <title>Hacked Hogwarts Student List</title>
   </head>
   <body>
-    <h1>Hogwarts students</h1>
+    <h1>Hogwarts Student List</h1>
     <table id="list">
       <thead>
         <tr>
@@ -39,11 +39,19 @@
       </tr>
     </template>
     <div class="popUp hidden">
-      <p>Full name:</p>
-      <h1></h1>
-      <p>House:</p>
-      <h2></h2>
       <button class="closeButton"></button>
+      <div class="popupContent">
+        <div>
+          <p>Full name:</p>
+          <h1></h1>
+          <p>House:</p>
+          <h2></h2>
+        </div>
+        <div class="popupImageHolder">
+          <img src="" />
+          <button class="expellButton">Expell</button>
+        </div>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>
