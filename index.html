@@ -10,6 +10,12 @@
   <body>
     <header>
       <h1>Hogwarts Student List</h1>
+      <p>
+        Show list:
+        <button class="filter" data-action="filter" data-filter="all">All students</button>
+        <button class="filter" data-action="filter" data-filter="false">Fine students</button>
+        <button class="filter" data-action="filter" data-filter="true">Expelled students</button>
+      </p>
     </header>
     <main>
       <table id="list">
@@ -23,6 +29,7 @@
             <th>House</th>
             <th>Prefect</th>
             <th>Inqu</th>
+            <th>Expelled</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -39,6 +46,7 @@
           <!-- <td data-field="image"><img src="" /></td> -->
           <td data-field="prefect">DESCRIPTION</td>
           <td data-field="inqu">AGE</td>
+          <td data-field="expelled">AGE</td>
         </tr>
       </template>
 
@@ -57,7 +65,7 @@
           </div>
           <div class="popupImageHolder">
             <img src="" />
-            <button class="expellButton">Expell</button>
+            <button class="expelButton">Expel</button>
           </div>
         </div>
       </div>

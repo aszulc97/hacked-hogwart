@@ -2,6 +2,8 @@ window.addEventListener("DOMContentLoaded", start);
 
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 const allStudents = [];
+const expelledStudents = [];
+const fineStudents = [];
 const Student = {
   firstname: "",
   middlename: "",
@@ -11,12 +13,25 @@ const Student = {
   house: "",
   image: "",
   prefect: false,
-  ingu: false,
+  inqu: false,
+  expelled: false,
 };
 
 function start() {
   console.log("ready");
   loadJSON();
+
+  let listButtons = document.querySelectorAll(".filter");
+  listButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      console.log(this.dataset.filter);
+      if (this.dataset.filter === "all") {
+        displayList(allStudents);
+      } else {
+        displayList(filteringExpelled(this.dataset.filter));
+      }
+    });
+  });
 }
 
 function loadJSON() {
@@ -40,7 +55,8 @@ function prepareObjects(jsonStudent) {
   student.image = getImage(fullnameString);
 
   allStudents.push(student);
-  displayList();
+  fineStudents.push(student);
+  displayList(allStudents);
 }
 
 function fixCapitalization(dataString) {
@@ -83,9 +99,37 @@ function imageExist(url) {
   return img.height;
 }
 
-function displayList() {
+function expelStudent(student) {
+  // if (confirm("Are you sure you want to expel this student?")) {
+  student.expelled = true;
+  let index = fineStudents.indexOf(student);
+  if (index > -1) {
+    fineStudents.splice(index, 1); // 2nd parameter means remove one item only
+  }
+  expelledStudents.push(student);
+  closePopUp();
+}
+//}
+
+function filteringExpelled(expelledStatus) {
+  console.log(expelledStatus);
+  allStudents.forEach((student) => console.log(student.expelled == expelledStatus));
+  let filteredData = allStudents.filter((student) => String(student.expelled) == expelledStatus);
+  // if (!filteredData.length) {
+  //   filteredData = allStudents;
+  // }
+  return filteredData;
+}
+
+// function displayFiltered(animalType) {
+//   filtered = filtering(animalType);
+//   displayList(filtered);
+// }
+
+function displayList(arrayToDisplay) {
   document.querySelector("#list tbody").innerHTML = "";
-  allStudents.forEach(displayStudent);
+  console.log("arraytodisp", arrayToDisplay);
+  arrayToDisplay.forEach(displayStudent);
 }
 
 function displayStudent(student) {
@@ -106,6 +150,11 @@ function displayStudent(student) {
   } else {
     clone.querySelector("[data-field=inqu]").textContent = "f";
   }
+  if (student.expelled) {
+    clone.querySelector("[data-field=expelled]").textContent = "t";
+  } else {
+    clone.querySelector("[data-field=expelled]").textContent = "f";
+  }
   // clone.querySelector("[data-field=image]>img").src = student.image;
   clone.querySelector("tr").addEventListener("click", function () {
     showPopUp(student);
@@ -120,6 +169,9 @@ function showPopUp(student) {
   document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   document.querySelector("div > h2").textContent = student.house;
   document.querySelector("img").src = student.image;
+  document.querySelector(".expelButton").addEventListener("click", function () {
+    expelStudent(student);
+  });
   document.querySelector(".closeButton").addEventListener("click", closePopUp);
 }
 

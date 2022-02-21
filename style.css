@@ -3,13 +3,10 @@
   src: url("ParryHotter.ttf") format("truetype");
 }
 
-header {
+header h1 {
   font-family: "Parry Hotter";
   font-size: 2rem;
   text-align: center;
-}
-
-header h1 {
   margin: 0.2rem;
 }
 
@@ -65,6 +62,10 @@ th,
 tr td {
   text-align: start;
   padding: 1rem;
+}
+
+th {
+  padding-bottom: 0.2rem;
 }
 
 tbody tr {
