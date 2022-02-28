@@ -10,12 +10,24 @@
   <body>
     <header>
       <h1>Hogwarts Student List</h1>
-      <p>
-        Show list:
-        <button class="filter" data-action="filter" data-filter="all">All students</button>
-        <button class="filter" data-action="filter" data-filter="false">Fine students</button>
-        <button class="filter" data-action="filter" data-filter="true">Expelled students</button>
-      </p>
+      <div id="headerPanel">
+        <p>
+          Show list:
+          <button class="filter" data-action="filter" data-filter="all">All students</button>
+          <button class="filter" data-action="filter" data-filter="false">Fine students</button>
+          <button class="filter" data-action="filter" data-filter="true">Expelled students</button>
+        </p>
+        <div>
+          <label for="houseDropdown">Filter by house:</label>
+          <select id="houseDropdown" onchange="dropdown()">
+            <option id="reset">Reset</option>
+            <option id="gryffindor">Gryffindor</option>
+            <option id="slytherin">Slytherin</option>
+            <option id="hufflepuff">Hufflepuff</option>
+            <option id="ravenclaw">Ravenclaw</option>
+          </select>
+        </div>
+      </div>
     </header>
     <main>
       <table id="list">

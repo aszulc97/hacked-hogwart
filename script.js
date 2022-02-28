@@ -121,6 +121,25 @@ function filteringExpelled(expelledStatus) {
   return filteredData;
 }
 
+function dropdown() {
+  var value = document.getElementById("houseDropdown").options[houseDropdown.selectedIndex].value;
+  if (value === "Reset") {
+    //clearList();
+    displayList(allStudents);
+    console.log("hi");
+  } else {
+    console.log(value);
+    filterHouse(value);
+  }
+}
+
+function filterHouse(house) {
+  //clearList();
+  const filtered = allStudents.filter((student) => student.house === house);
+  console.log(filtered);
+  displayList(filtered);
+}
+
 // function displayFiltered(animalType) {
 //   filtered = filtering(animalType);
 //   displayList(filtered);
@@ -177,4 +196,12 @@ function showPopUp(student) {
 
 function closePopUp() {
   document.querySelector(".popUp").classList.add("hidden");
+}
+
+function clearList() {
+  console.log("clear");
+  const myNode = document.getElementById("list");
+  while (myNode.childNodes.length > 3) {
+    myNode.removeChild(myNode.lastChild);
+  }
 }

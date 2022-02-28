@@ -124,3 +124,17 @@ tbody tr:hover {
   height: 500px;
   top: 0;
 }
+
+#headerPanel {
+  display: flex;
+  justify-content: space-between;
+}
+
+#headerPanel div {
+  margin: 1rem;
+}
+
+select {
+  height: 100%;
+  
+}
