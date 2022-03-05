@@ -157,12 +157,16 @@ function expelStudent(student) {
 }
 
 function makeAPrefect(student) {
-  student.prefect = true;
-  if (!prefects.includes(student)) {
-    prefects.push(student);
-    displayPrefect(student);
-    closePopUp();
-  } //todo: else show info window
+  console.log(student.house);
+  let prefectsWithinHouse = prefects.filter((futurePrefect) => futurePrefect.house === student.house);
+  if (prefectsWithinHouse.length < 2) {
+    student.prefect = true;
+    if (!prefects.includes(student)) {
+      prefects.push(student);
+      displayPrefect(student);
+      closePopUp();
+    } //todo: else show info window
+  } //todo: else show info
 }
 
 function addToSquad(student) {
