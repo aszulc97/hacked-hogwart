@@ -156,3 +156,14 @@ th[data-sort-direction=""]::after {
 .hidden {
   display: none;
 }
+
+.member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 2rem 0 2rem;
+}
+
+#removeButton {
+  height: 100%;
+}

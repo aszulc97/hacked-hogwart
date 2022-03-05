@@ -163,7 +163,7 @@ function makeAPrefect(student) {
       student.prefect = true;
       if (!prefects.includes(student)) {
         prefects.push(student);
-        displayPrefect(student);
+        displaySpecial(student, "prefect");
         closePopUp();
       } //todo: else show info window
     } //todo: else show info
@@ -177,27 +177,51 @@ function addToSquad(student) {
       student.inqu = true;
       if (!inquSquad.includes(student)) {
         inquSquad.push(student);
-        displaySquadMember(student);
+        displaySpecial(student, "inqu");
         closePopUp();
       } //todo: else show info window
     } //todo: else show info
   } //todo: else info
 }
 
-function displayPrefect(student) {
-  const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
-  clone.querySelector("[data-field=firstname]").textContent = student.firstname;
-  clone.querySelector("[data-field=lastname]").textContent = student.lastname;
-  let studentHouse = student.house.toLowerCase();
-  document.querySelector(`#${studentHouse}Prefects`).appendChild(clone);
+function removeStudent(student, specialFunction) {
+  if (specialFunction === "prefect") {
+    let index = prefects.indexOf(student);
+    prefects.splice(index, 1); // 2nd parameter means remove one item only
+    let otherPrefects = prefects.filter((prefect) => prefect.house === student.house);
+    document.querySelector(`#${student.house.toLowerCase()}Prefects`).innerHTML = "";
+    otherPrefects.forEach((student) => displaySpecial(student, "prefect"));
+  } else if (specialFunction === "inqu") {
+    let index = inquSquad.indexOf(student);
+    inquSquad.splice(index, 1); // 2nd parameter means remove one item only
+    document.querySelector("#inquMembers").innerHTML = "";
+    inquSquad.forEach((student) => displaySpecial(student, "inqu"));
+  }
 }
 
-function displaySquadMember(student) {
+function displaySpecial(student, parent) {
   const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
-  clone.querySelector("[data-field=firstname]").textContent = student.firstname;
-  clone.querySelector("[data-field=lastname]").textContent = student.lastname;
-  document.querySelector("#inquMembers").appendChild(clone);
+  clone.querySelector("[data-field=fullname]").textContent = student.firstname + " " + student.lastname;
+  if (parent === "prefect") {
+    clone.querySelector("#removeButton").addEventListener("click", function () {
+      removeStudent(student, "prefect");
+    });
+    let studentHouse = student.house.toLowerCase();
+    document.querySelector(`#${studentHouse}Prefects`).appendChild(clone);
+  } else if (parent === "inqu") {
+    clone.querySelector("#removeButton").addEventListener("click", function () {
+      removeStudent(student, "inqu");
+    });
+    document.querySelector("#inquMembers").appendChild(clone);
+  }
 }
+
+// function displaySquadMember(student) {
+//   const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
+//   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
+//   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
+//   document.querySelector("#inquMembers").appendChild(clone);
+// }
 
 function filteringExpelled(expelledStatus) {
   console.log(expelledStatus);
