@@ -11,6 +11,7 @@ const prefects = [];
 const inquSquad = [];
 let filtered = [];
 let currentList = "all";
+let globalStudent;
 
 const Student = {
   firstname: "",
@@ -117,7 +118,6 @@ function prepareObjects(jsonStudent) {
   student.middlename = fullnameString.substring(fullnameString.indexOf(" ") + 1, fullnameString.lastIndexOf(" "));
   student.gender = jsonStudent.gender;
   student.house = fixCapitalization(jsonStudent.house.trim());
-  student.image = getImage(fullnameString);
 
   allStudents.push(student);
   fineStudents.push(student);
@@ -137,10 +137,13 @@ function fixCapitalization(dataString) {
   return charArray.join("");
 }
 
-function getImage(fullname) {
-  let lastname = fullname.substring(fullname.lastIndexOf(" ") + 1).toLowerCase();
-  let imageUrl = "/images/" + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
-  console.log("height", fullname, imageExist(imageUrl));
+function getImage(lastname, firstname) {
+  let fullname = firstname;
+  lastname = lastname.toLowerCase();
+  //let lastname = fullname.substring(fullname.lastIndexOf(" ") + 1).toLowerCase();
+  let imageUrlBase = "https://raw.githubusercontent.com/aszulc97/hacked-hogwart/master/images/";
+  let imageUrl = imageUrlBase + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
+  console.log("height", fullname, imageExist(imageUrl), imageUrl);
   if (imageExist(imageUrl)) {
     return imageUrl;
   } else {
@@ -148,7 +151,7 @@ function getImage(fullname) {
       imageUrl = "/images/" + lastname.substring(lastname.indexOf("-") + 1) + "_" + fullname.charAt(0).toLowerCase() + ".png";
       return imageUrl;
     } else {
-      let firstname = fullname.substring(0, fullname.indexOf(" "));
+      //let firstname = fullname.substring(0, fullname.indexOf(" "));
       imageUrl = "/images/" + lastname + "_" + firstname.toLowerCase() + ".png";
       if (imageExist(imageUrl)) {
         return imageUrl;
@@ -360,33 +363,44 @@ function displayStudent(student) {
   }
   // clone.querySelector("[data-field=image]>img").src = student.image;
   clone.querySelector("tr").addEventListener("click", function () {
+    removeListeners();
     showPopUp(student);
   });
 
   document.querySelector("#list tbody").appendChild(clone);
 }
 
+let expelListener = function () {
+  expelStudent(globalStudent);
+  removeListeners();
+};
+
+let prefectListener = function () {
+  makeAPrefect(globalStudent);
+  removeListeners();
+};
+
+let squadListener = function () {
+  addToSquad(globalStudent);
+  removeListeners();
+};
+
+function removeListeners() {
+  console.log("yo mama");
+  document.querySelector(".expelButton").removeEventListener("click", expelListener);
+  document.querySelector(".prefectButton").removeEventListener("click", prefectListener);
+  document.querySelector(".inquButton").removeEventListener("click", squadListener);
+}
+
 function showPopUp(student) {
   // e.preventDefault();
+  globalStudent = student;
+  student.image = getImage(student.lastname, student.firstname);
   document.querySelector(".popUp").classList.remove("hidden");
   document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   document.querySelector("div > h2").textContent = student.house;
   document.querySelector("div > .blood").textContent = bloodType(student);
   document.querySelector("img").src = student.image;
-  let expelListener = function () {
-    expelStudent(student);
-    removeListeners();
-  };
-
-  let prefectListener = function () {
-    makeAPrefect(student);
-    removeListeners();
-  };
-
-  let squadListener = function () {
-    addToSquad(student);
-    removeListeners();
-  };
 
   //todo: make buttons hidden if student.expelled
 
@@ -397,28 +411,19 @@ function showPopUp(student) {
     closePopUp(student);
     removeListeners();
   });
-
-  function removeListeners() {
-    document.querySelector(".expelButton").removeEventListener("click", expelListener);
-    document.querySelector(".prefectButton").removeEventListener("click", prefectListener);
-    document.querySelector(".inquButton").removeEventListener("click", squadListener);
-  }
+  document.querySelector(".popUp").addEventListener("DOMCharacterDataModified", removeListeners);
 }
 
 //expelListener = function(){};
 
-function closePopUp(student) {
+function closePopUp() {
   document.querySelector(".popUp").classList.add("hidden");
-  //document.querySelector(".expelButton").removeEventListener("click", expelListener);
-
   console.log("close");
 }
 
-function clearList() {
-  console.log("clear");
-
-  const myNode = document.getElementById("list");
-  while (myNode.childNodes.length > 3) {
-    myNode.removeChild(myNode.lastChild);
-  }
-}
+// function clearList() {
+//   const myNode = document.getElementById("list");
+//   while (myNode.childNodes.length > 3) {
+//     myNode.removeChild(myNode.lastChild);
+//   }
+// }
