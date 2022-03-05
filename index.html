@@ -46,7 +46,9 @@
         </thead>
         <tbody></tbody>
       </table>
+      <!-- vertical line -->
       <div class="vl"></div>
+
       <template id="student">
         <tr>
           <td data-field="firstname">NAME</td>
@@ -63,6 +65,8 @@
       </template>
 
       <div id="rightSide">
+        <button id="prefectsButton" disabled>Prefects</button>
+        <button id="inquButton">Inqu</button>
         <div id="prefectsList">
           <h3>Prefects</h3>
           <h5>GRYFFINDOR</h5>
@@ -73,6 +77,10 @@
           <div id="ravenclawPrefects"></div>
           <h5>SLYTHERIN</h5>
           <div id="slytherinPrefects"></div>
+        </div>
+        <div id="inquList" class="hidden">
+          <h3>Inqu squad</h3>
+          <div id="inquMembers"></div>
         </div>
       </div>
 

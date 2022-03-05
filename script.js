@@ -5,7 +5,7 @@ const allStudents = [];
 const expelledStudents = [];
 const fineStudents = [];
 const prefects = [];
-const inqu = [];
+const inquSquad = [];
 let filtered = [];
 let currentList = "all";
 
@@ -44,6 +44,7 @@ function start() {
       displayList(filtered);
     });
   });
+
   let allHeaders = document.querySelectorAll("th[data-action='sort']");
   allHeaders.forEach((th) => {
     th.addEventListener("click", function () {
@@ -61,6 +62,20 @@ function start() {
       }
       clicked = this;
     });
+  });
+
+  document.querySelector("#prefectsButton").addEventListener("click", function () {
+    document.querySelector("#inquList").classList.add("hidden");
+    document.querySelector("#prefectsList").classList.remove("hidden");
+    this.disabled = true;
+    document.querySelector("#inquButton").disabled = false;
+  });
+
+  document.querySelector("#inquButton").addEventListener("click", function () {
+    document.querySelector("#prefectsList").classList.add("hidden");
+    document.querySelector("#inquList").classList.remove("hidden");
+    this.disabled = true;
+    document.querySelector("#prefectsButton").disabled = false;
   });
 }
 
@@ -131,7 +146,6 @@ function imageExist(url) {
 }
 
 function expelStudent(student) {
-  console.log(student);
   // if (confirm("Are you sure you want to expel this student?")) {
   student.expelled = true;
   let index = fineStudents.indexOf(student);
@@ -143,24 +157,38 @@ function expelStudent(student) {
 }
 
 function makeAPrefect(student) {
-  console.log(student);
   student.prefect = true;
-  prefects.push(student);
-  displayPrefects();
-  closePopUp();
+  if (!prefects.includes(student)) {
+    prefects.push(student);
+    displayPrefect(student);
+    closePopUp();
+  } //todo: else show info window
 }
 
-function displayPrefects() {
-  console.log(prefects);
-  document.querySelector("#gryffindorPrefects").innerHTML = "";
-  prefects.forEach((student) => {
-    const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
-    clone.querySelector("[data-field=firstname]").textContent = student.firstname;
-    clone.querySelector("[data-field=lastname]").textContent = student.lastname;
-    document.querySelector("#gryffindorPrefects").appendChild(clone);
-  });
+function addToSquad(student) {
+  console.log(student);
+  student.inqu = true;
+  if (!inquSquad.includes(student)) {
+    inquSquad.push(student);
+    displaySquadMember(student);
+    closePopUp();
+  } //todo: else show info window
 }
-//}
+
+function displayPrefect(student) {
+  const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
+  clone.querySelector("[data-field=firstname]").textContent = student.firstname;
+  clone.querySelector("[data-field=lastname]").textContent = student.lastname;
+  let studentHouse = student.house.toLowerCase();
+  document.querySelector(`#${studentHouse}Prefects`).appendChild(clone);
+}
+
+function displaySquadMember(student) {
+  const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
+  clone.querySelector("[data-field=firstname]").textContent = student.firstname;
+  clone.querySelector("[data-field=lastname]").textContent = student.lastname;
+  document.querySelector("#inquMembers").appendChild(clone);
+}
 
 function filteringExpelled(expelledStatus) {
   console.log(expelledStatus);
@@ -272,13 +300,19 @@ function showPopUp(student) {
     removeListeners();
   };
 
-  let prefectListener = function prefection() {
+  let prefectListener = function () {
     makeAPrefect(student);
+    removeListeners();
+  };
+
+  let squadListener = function () {
+    addToSquad(student);
     removeListeners();
   };
 
   document.querySelector(".expelButton").addEventListener("click", expelListener);
   document.querySelector(".prefectButton").addEventListener("click", prefectListener);
+  document.querySelector(".inquButton").addEventListener("click", squadListener);
   document.querySelector(".closeButton").addEventListener("click", function () {
     closePopUp(student);
     removeListeners();
@@ -287,6 +321,7 @@ function showPopUp(student) {
   function removeListeners() {
     document.querySelector(".expelButton").removeEventListener("click", expelListener);
     document.querySelector(".prefectButton").removeEventListener("click", prefectListener);
+    document.querySelector(".inquButton").removeEventListener("click", squadListener);
   }
 }
 

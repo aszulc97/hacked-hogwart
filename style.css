@@ -152,3 +152,7 @@ th[data-sort-direction="desc"]::after {
 th[data-sort-direction=""]::after {
   content: "";
 }
+
+.hidden {
+  display: none;
+}
