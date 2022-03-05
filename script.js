@@ -77,6 +77,8 @@ function start() {
     this.disabled = true;
     document.querySelector("#prefectsButton").disabled = false;
   });
+
+  document.querySelector("input").addEventListener("input", updateResult);
 }
 
 function loadJSON() {
@@ -143,6 +145,15 @@ function imageExist(url) {
   var img = new Image();
   img.src = url;
   return img.height;
+}
+
+function updateResult() {
+  let searchFields = ["firstname", "lastname"];
+  let query = document.querySelector("input").value.toLowerCase();
+  let searchResult = filtered.filter((student) => {
+    return searchFields.some((field) => student[field].toLowerCase().includes(query));
+  });
+  displayList(searchResult);
 }
 
 function expelStudent(student) {
