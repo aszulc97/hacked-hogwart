@@ -134,7 +134,21 @@ tbody tr:hover {
   margin: 1rem;
 }
 
-select {
+/* select {
   height: 100%;
-  
+} */
+[data-action] {
+  cursor: pointer;
+}
+
+th[data-sort-direction="asc"]::after {
+  content: "\25b2";
+}
+
+th[data-sort-direction="desc"]::after {
+  content: "\25bc";
+}
+
+th[data-sort-direction=""]::after {
+  content: "";
 }

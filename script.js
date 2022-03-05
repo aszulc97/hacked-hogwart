@@ -6,6 +6,7 @@ const expelledStudents = [];
 const fineStudents = [];
 const prefects = [];
 const inqu = [];
+let filtered = [];
 const Student = {
   firstname: "",
   middlename: "",
@@ -19,6 +20,10 @@ const Student = {
   expelled: false,
 };
 
+const settings = {
+  sortDir: undefined,
+};
+
 function start() {
   console.log("ready");
   loadJSON();
@@ -28,10 +33,29 @@ function start() {
     btn.addEventListener("click", function () {
       console.log(this.dataset.filter);
       if (this.dataset.filter === "all") {
-        displayList(allStudents);
+        filtered = allStudents;
       } else {
-        displayList(filteringExpelled(this.dataset.filter));
+        filteringExpelled(this.dataset.filter);
       }
+      displayList(filtered);
+    });
+  });
+  let allHeaders = document.querySelectorAll("th[data-action='sort']");
+  allHeaders.forEach((th) => {
+    th.addEventListener("click", function () {
+      if (typeof clicked !== "undefined") {
+        clicked.dataset.sortDirection = "";
+      }
+      if (settings.sortDir) {
+        sortering(this.dataset.sort, true);
+        settings.sortDir = false;
+        this.dataset.sortDirection = "desc";
+      } else {
+        sortering(this.dataset.sort);
+        settings.sortDir = true;
+        this.dataset.sortDirection = "asc";
+      }
+      clicked = this;
     });
   });
 }
@@ -58,6 +82,7 @@ function prepareObjects(jsonStudent) {
 
   allStudents.push(student);
   fineStudents.push(student);
+  filtered = allStudents;
   displayList(allStudents);
 }
 
@@ -136,18 +161,18 @@ function displayPrefects() {
 function filteringExpelled(expelledStatus) {
   console.log(expelledStatus);
   allStudents.forEach((student) => console.log(student.expelled == expelledStatus));
-  let filteredData = allStudents.filter((student) => String(student.expelled) == expelledStatus);
+  filtered = allStudents.filter((student) => String(student.expelled) == expelledStatus);
   // if (!filteredData.length) {
   //   filteredData = allStudents;
   // }
-  return filteredData;
+  // return filteredData;
 }
 
 function dropdown() {
   var value = document.getElementById("houseDropdown").options[houseDropdown.selectedIndex].value;
   if (value === "Reset") {
     //clearList();
-    displayList(allStudents);
+    displayList(filtered);
     console.log("hi");
   } else {
     console.log(value);
@@ -157,8 +182,7 @@ function dropdown() {
 
 function filterHouse(house) {
   //clearList();
-  const filtered = allStudents.filter((student) => student.house === house);
-  console.log(filtered);
+  filtered = filtered.filter((student) => student.house === house);
   displayList(filtered);
 }
 
@@ -166,6 +190,26 @@ function filterHouse(house) {
 //   filtered = filtering(animalType);
 //   displayList(filtered);
 // }
+
+function sortByProperty(array, propertyName) {
+  return array.sort(function (a, b) {
+    if (a[propertyName] < b[propertyName]) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+}
+
+function sortering(sortBy, reversed) {
+  console.log("sortowanko", filtered);
+  filtered = sortByProperty(filtered, sortBy);
+  console.log(sortBy);
+  if (reversed === true) {
+    filtered = filtered.reverse();
+  }
+  displayList(filtered);
+}
 
 function displayList(arrayToDisplay) {
   document.querySelector("#list tbody").innerHTML = "";
