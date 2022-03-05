@@ -99,7 +99,7 @@ function prepareObjects(jsonStudent) {
   student.middlename = fullnameString.substring(fullnameString.indexOf(" ") + 1, fullnameString.lastIndexOf(" "));
   student.gender = jsonStudent.gender;
   student.house = fixCapitalization(jsonStudent.house.trim());
-  student.image = getImage(fullnameString);
+  student.image = getImage(student, fullnameString);
 
   allStudents.push(student);
   fineStudents.push(student);
@@ -119,32 +119,46 @@ function fixCapitalization(dataString) {
   return charArray.join("");
 }
 
-function getImage(fullname) {
+function getImage(student, fullname) {
   let lastname = fullname.substring(fullname.lastIndexOf(" ") + 1).toLowerCase();
   let imageUrl = "/images/" + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
-  console.log("height", fullname, imageExist(imageUrl));
-  if (imageExist(imageUrl)) {
-    return imageUrl;
-  } else {
-    if (lastname.includes("-")) {
-      imageUrl = "/images/" + lastname.substring(lastname.indexOf("-") + 1) + "_" + fullname.charAt(0).toLowerCase() + ".png";
-      return imageUrl;
+  imageExist(imageUrl, (exists) => {
+    if ((exists)) {
+      student.image = imageUrl;
     } else {
-      let firstname = fullname.substring(0, fullname.indexOf(" "));
-      imageUrl = "/images/" + lastname + "_" + firstname.toLowerCase() + ".png";
-      if (imageExist(imageUrl)) {
-        return imageUrl;
+      if (lastname.includes("-")) {
+        imageUrl = "/images/" + lastname.substring(lastname.indexOf("-") + 1) + "_" + fullname.charAt(0).toLowerCase() + ".png";
+        student.image =  imageUrl;
       } else {
-        return "/images/no_pic.png";
+        let firstname = fullname.substring(0, fullname.indexOf(" "));
+        imageUrl = "/images/" + lastname + "_" + firstname.toLowerCase() + ".png";
+        imageExist(imageUrl, (existsInner) => {
+          if (existsInner) {
+            student.image =  imageUrl;
+          } else {
+            student.image =  "/images/no_pic.png";
+          }
+        })
       }
     }
-  }
+  })
 }
 
-function imageExist(url) {
-  var img = new Image();
+function imageExist(url, callback) {
+  const img = new Image();
   img.src = url;
-  return img.height;
+
+  if (img.complete) {
+    callback(true);
+  } else {
+    img.onload = () => {
+      callback(true);
+    };
+    
+    img.onerror = () => {
+      callback(false);
+    };
+  }
 }
 
 function updateResult() {
