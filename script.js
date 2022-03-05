@@ -157,28 +157,31 @@ function expelStudent(student) {
 }
 
 function makeAPrefect(student) {
-  console.log(student.house);
-  let prefectsWithinHouse = prefects.filter((futurePrefect) => futurePrefect.house === student.house);
-  if (prefectsWithinHouse.length < 2) {
-    student.prefect = true;
-    if (!prefects.includes(student)) {
-      prefects.push(student);
-      displayPrefect(student);
-      closePopUp();
-    } //todo: else show info window
-  } //todo: else show info
+  if (!student.expelled) {
+    let prefectsWithinHouse = prefects.filter((futurePrefect) => futurePrefect.house === student.house);
+    if (prefectsWithinHouse.length < 2) {
+      student.prefect = true;
+      if (!prefects.includes(student)) {
+        prefects.push(student);
+        displayPrefect(student);
+        closePopUp();
+      } //todo: else show info window
+    } //todo: else show info
+  } //todo: else info
 }
 
 function addToSquad(student) {
-  if (student.house === "Slytherin") {
-    console.log(student);
-    student.inqu = true;
-    if (!inquSquad.includes(student)) {
-      inquSquad.push(student);
-      displaySquadMember(student);
-      closePopUp();
-    } //todo: else show info window
-  } //todo: else show info
+  if (!student.expelled) {
+    if (student.house === "Slytherin") {
+      console.log(student);
+      student.inqu = true;
+      if (!inquSquad.includes(student)) {
+        inquSquad.push(student);
+        displaySquadMember(student);
+        closePopUp();
+      } //todo: else show info window
+    } //todo: else show info
+  } //todo: else info
 }
 
 function displayPrefect(student) {
@@ -315,6 +318,8 @@ function showPopUp(student) {
     addToSquad(student);
     removeListeners();
   };
+
+  //todo: make buttons hidden if student.expelled
 
   document.querySelector(".expelButton").addEventListener("click", expelListener);
   document.querySelector(".prefectButton").addEventListener("click", prefectListener);
