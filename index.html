@@ -63,8 +63,23 @@
       </template>
 
       <div id="rightSide">
-        <h3>Prefects</h3>
+        <div id="prefectsList">
+          <h3>Prefects</h3>
+          <h5>GRYFFINDOR</h5>
+          <div id="gryffindorPrefects"></div>
+          <h5>HUFFLEPUFF</h5>
+          <div id="hufflepuffPrefects"></div>
+          <h5>RAVENCLAW</h5>
+          <div id="ravenclawPrefects"></div>
+          <h5>SLYTHERIN</h5>
+          <div id="slytherinPrefects"></div>
+        </div>
       </div>
+
+      <template id="specialFunction">
+        <p data-field="firstname">NAME</p>
+        <p data-field="lastname">NAME</p>
+      </template>
 
       <div class="popUp hidden">
         <button class="closeButton"></button>
@@ -78,6 +93,8 @@
           <div class="popupImageHolder">
             <img src="" />
             <button class="expelButton">Expel</button>
+            <button class="prefectButton">Make a prefect</button>
+            <button class="inquButton">Add to inqu squad</button>
           </div>
         </div>
       </div>

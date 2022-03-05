@@ -4,6 +4,8 @@ const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 const allStudents = [];
 const expelledStudents = [];
 const fineStudents = [];
+const prefects = [];
+const inqu = [];
 const Student = {
   firstname: "",
   middlename: "",
@@ -100,6 +102,7 @@ function imageExist(url) {
 }
 
 function expelStudent(student) {
+  console.log(student);
   // if (confirm("Are you sure you want to expel this student?")) {
   student.expelled = true;
   let index = fineStudents.indexOf(student);
@@ -108,6 +111,25 @@ function expelStudent(student) {
   }
   expelledStudents.push(student);
   closePopUp();
+}
+
+function makeAPrefect(student) {
+  console.log(student);
+  student.prefect = true;
+  prefects.push(student);
+  displayPrefects();
+  closePopUp();
+}
+
+function displayPrefects() {
+  console.log(prefects);
+  document.querySelector("#gryffindorPrefects").innerHTML = "";
+  prefects.forEach((student) => {
+    const clone = document.querySelector("template#specialFunction").content.cloneNode(true);
+    clone.querySelector("[data-field=firstname]").textContent = student.firstname;
+    clone.querySelector("[data-field=lastname]").textContent = student.lastname;
+    document.querySelector("#gryffindorPrefects").appendChild(clone);
+  });
 }
 //}
 
@@ -147,7 +169,6 @@ function filterHouse(house) {
 
 function displayList(arrayToDisplay) {
   document.querySelector("#list tbody").innerHTML = "";
-  console.log("arraytodisp", arrayToDisplay);
   arrayToDisplay.forEach(displayStudent);
 }
 
@@ -188,18 +209,41 @@ function showPopUp(student) {
   document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   document.querySelector("div > h2").textContent = student.house;
   document.querySelector("img").src = student.image;
-  document.querySelector(".expelButton").addEventListener("click", function () {
+  let expelListener = function () {
     expelStudent(student);
+    removeListeners();
+  };
+
+  let prefectListener = function prefection() {
+    makeAPrefect(student);
+    removeListeners();
+  };
+
+  document.querySelector(".expelButton").addEventListener("click", expelListener);
+  document.querySelector(".prefectButton").addEventListener("click", prefectListener);
+  document.querySelector(".closeButton").addEventListener("click", function () {
+    closePopUp(student);
+    removeListeners();
   });
-  document.querySelector(".closeButton").addEventListener("click", closePopUp);
+
+  function removeListeners() {
+    document.querySelector(".expelButton").removeEventListener("click", expelListener);
+    document.querySelector(".prefectButton").removeEventListener("click", prefectListener);
+  }
 }
 
-function closePopUp() {
+//expelListener = function(){};
+
+function closePopUp(student) {
   document.querySelector(".popUp").classList.add("hidden");
+  //document.querySelector(".expelButton").removeEventListener("click", expelListener);
+
+  console.log("close");
 }
 
 function clearList() {
   console.log("clear");
+
   const myNode = document.getElementById("list");
   while (myNode.childNodes.length > 3) {
     myNode.removeChild(myNode.lastChild);
