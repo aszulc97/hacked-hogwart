@@ -170,13 +170,15 @@ function makeAPrefect(student) {
 }
 
 function addToSquad(student) {
-  console.log(student);
-  student.inqu = true;
-  if (!inquSquad.includes(student)) {
-    inquSquad.push(student);
-    displaySquadMember(student);
-    closePopUp();
-  } //todo: else show info window
+  if (student.house === "Slytherin") {
+    console.log(student);
+    student.inqu = true;
+    if (!inquSquad.includes(student)) {
+      inquSquad.push(student);
+      displaySquadMember(student);
+      closePopUp();
+    } //todo: else show info window
+  } //todo: else show info
 }
 
 function displayPrefect(student) {
