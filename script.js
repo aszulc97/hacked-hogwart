@@ -7,6 +7,8 @@ const fineStudents = [];
 const prefects = [];
 const inqu = [];
 let filtered = [];
+let currentList = "all";
+
 const Student = {
   firstname: "",
   middlename: "",
@@ -37,6 +39,8 @@ function start() {
       } else {
         filteringExpelled(this.dataset.filter);
       }
+      currentList = this.dataset.filter;
+      document.getElementById("houseDropdown").selectedIndex = 0;
       displayList(filtered);
     });
   });
@@ -182,7 +186,19 @@ function dropdown() {
 
 function filterHouse(house) {
   //clearList();
-  filtered = filtered.filter((student) => student.house === house);
+  console.log(currentList);
+  switch (currentList) {
+    case "all":
+      filtered = allStudents.filter((student) => student.house === house);
+      break;
+    case "true":
+      filtered = expelledStudents.filter((student) => student.house === house);
+      break;
+    case "false":
+      filtered = fineStudents.filter((student) => student.house === house);
+      break;
+  }
+  //filtered = filtered.filter((student) => student.house === house);
   displayList(filtered);
 }
 
@@ -219,8 +235,6 @@ function displayList(arrayToDisplay) {
 function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
-  // clone.querySelector("[data-field=middlename]").textContent = student.middlename;
-  // clone.querySelector("[data-field=nickname]").textContent = student.nickname;
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
