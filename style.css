@@ -48,6 +48,7 @@ header h1 {
 
 header {
   margin: 0 3rem;
+  font-size: 1.2rem;
 }
 
 main {
@@ -60,6 +61,21 @@ main {
 button {
   background-color: var(--lightbeige);
   cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 15px;
+}
+
+button:hover {
+  opacity: 70%;
+}
+
+button:disabled {
+  cursor: auto;
+}
+
+button:disabled:hover {
+  opacity: 100%;
 }
 
 h3 {
@@ -120,7 +136,7 @@ h5 {
   height: 150%;
   position: absolute;
   right: -20%;
-  top: -15%;
+  top: -20%;
 }
 
 .popUp * {
@@ -165,11 +181,16 @@ th {
   color: var(--lightbeige);
 }
 
+th:hover {
+  text-decoration: underline;
+}
+
 tbody tr {
   background-color: var(--lightbeige);
   max-height: 3rem;
   border-spacing: 1rem;
   padding-bottom: 3rem;
+  font-size: 1.2rem;
 }
 
 tbody tr td:first-child,
@@ -257,6 +278,7 @@ th[data-sort-direction=""]::after {
   background-color: var(--lightbeige);
   padding: 0.5rem 2rem;
   border-radius: 15px;
+  font-size: 1.2rem;
 }
 
 #removeButton {
