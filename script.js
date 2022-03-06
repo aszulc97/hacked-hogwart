@@ -88,6 +88,7 @@ function start() {
   });
 
   document.querySelector("input").addEventListener("input", updateResult);
+  document.querySelector("#statisticsButton").addEventListener("click", showStatistics);
 }
 
 function loadBloodJSON() {
@@ -100,13 +101,15 @@ function loadBloodJSON() {
     });
 }
 
+//todo: don't show expelled column in lists other than all
 function loadJSON() {
   fetch(allUrl)
     .then((response) => response.json())
     .then((data) => {
       data.forEach(prepareObjects);
       // document.querySelector("button[data-filter='all']").textContent += ` (${allStudents.length})`;
-      // updateStudentAmount();
+      fillInStatistics();
+      updateStudentAmount();
       //todo: statistics
     });
 }
@@ -195,10 +198,20 @@ function updateResult() {
   displayList(searchResult);
 }
 
-// function updateStudentAmount() {
-//   document.querySelector("button[data-filter='false']").textContent += ` (${fineStudents.length})`;
-//   document.querySelector("button[data-filter='true']").textContent += ` (${expelledStudents.length})`;
-// }
+function fillInStatistics() {
+  document.querySelector("#allStudents").textContent = allStudents.length;
+  let housesArray = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"];
+  housesArray.forEach((house) => {
+    document.querySelector(`p#${house.toLowerCase()}`).textContent = allStudents.filter((student) => {
+      return student.house === house;
+    }).length;
+  });
+}
+
+function updateStudentAmount() {
+  document.querySelector("#nonexpelled").textContent = fineStudents.length;
+  document.querySelector("#expelled").textContent = expelledStudents.length;
+}
 
 function expelStudent(student) {
   // if (confirm("Are you sure you want to expel this student?")) {
@@ -213,6 +226,7 @@ function expelStudent(student) {
     }
     expelledStudents.push(student);
     closePopUp();
+    updateStudentAmount();
   }
 }
 
@@ -439,7 +453,7 @@ function showPopUp(student) {
   document.querySelector(".expelButton").addEventListener("click", expelListener);
   document.querySelector(".prefectButton").addEventListener("click", prefectListener);
   document.querySelector(".inquButton").addEventListener("click", squadListener);
-  document.querySelector(".closeButton").addEventListener("click", function () {
+  document.querySelector(".popUp .closeButton").addEventListener("click", function () {
     closePopUp(student);
     removeListeners();
   });
@@ -456,7 +470,6 @@ function showPopUp(student) {
 
 function closePopUp() {
   document.querySelector(".popUp").classList.add("hidden");
-  console.log("close");
 }
 
 function stylePopUp(student) {
@@ -509,9 +522,17 @@ function messWithBlood(student) {
   } else if (pureBloodFams.includes(student.lastname)) {
     let bloodArray = ["Pure-blood", "Half-blood", "Muggle-born"];
     let index = Math.floor(Math.random() * 3);
-    console.log(index);
     student.blood = bloodArray[index];
   } else {
     student.blood = "Pure-blood";
   }
+}
+
+function showStatistics() {
+  document.querySelector(".statistics").classList.remove("hidden");
+  document.querySelector(".statistics .closeButton").addEventListener("click", closeStatistics);
+}
+
+function closeStatistics() {
+  document.querySelector(".statistics").classList.add("hidden");
 }

@@ -93,6 +93,8 @@ input,
 select {
   padding: 0.5rem;
   border-radius: 15px;
+  font-size: 0.9rem;
+  background-color: var(--lightbeige);
 }
 
 #rightSide {
@@ -165,6 +167,19 @@ select {
   z-index: -1;
 }
 
+.statistics {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0.1rem solid #351b07;
+  border-radius: 5%;
+  padding: 2rem;
+  min-width: 30%;
+  background-color: var(--lightbeige);
+  overflow: hidden;
+}
+
 main {
   position: relative;
 }
@@ -187,7 +202,8 @@ th {
   color: var(--lightbeige);
 }
 
-th:hover {
+th:hover,
+#statisticsButton:hover {
   text-decoration: underline;
 }
 
@@ -244,19 +260,22 @@ tbody tr:hover {
   top: 0;
 }
 
-#headerPanel {
+#headerPanel,
+#headerPanelSecond {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-
+/* 
 #headerPanel div {
   margin: 1rem;
-}
+} */
 
 /* select {
   height: 100%;
 } */
-[data-action] {
+[data-action],
+#statisticsButton {
   cursor: pointer;
 }
 
@@ -289,6 +308,23 @@ th[data-sort-direction=""]::after {
 
 #removeButton {
   height: 100%;
+}
+
+.statistics .closeButton {
+  background-color: var(--darkbrown);
+  color: white;
+  height: 15%;
+}
+
+#allStatistics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#constValues *,
+#updatedValues * {
+  display: inline;
 }
 
 @keyframes blink {

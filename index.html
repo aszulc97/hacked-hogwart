@@ -10,12 +10,15 @@
   <body>
     <header>
       <h1>Hogwarts Student List</h1>
-      <input type="search" placeholder="search student..." />
       <div id="headerPanel">
+        <input type="search" placeholder="search student..." />
+        <h5 id="statisticsButton">Database statistics</h5>
+      </div>
+      <div id="headerPanelSecond">
         <p>
           Show list:
-          <button class="filter" data-action="filter" data-filter="all">All students</button>
-          <button class="filter" data-action="filter" data-filter="false">Fine students</button>
+          <button class="filter" data-action="filter" data-filter="all" disabled>All students</button>
+          <button class="filter" data-action="filter" data-filter="false">Non-expelled students</button>
           <button class="filter" data-action="filter" data-filter="true">Expelled students</button>
         </p>
         <div>
@@ -109,6 +112,36 @@
             <button class="expelButton">Expel</button>
             <button class="prefectButton">Make a prefect</button>
             <button class="inquButton">Add to inqu squad</button>
+          </div>
+        </div>
+      </div>
+      <div class="statistics hidden">
+        <button class="closeButton"></button>
+        <h3>Statistics</h5>
+        <div id="allStatistics">
+          <div id="constValues">
+            <p>All students:</p>
+            <p id="allStudents"></p>
+            <br>
+            <p>Gryffindor:</p>
+            <p id="gryffindor"></p>
+            <br>
+            <p>Hufflepuff:</p>
+            <p id="hufflepuff"></p>
+            <br>
+            <p>Ravenclaw:</p>
+            <p id="ravenclaw"></p>
+            <br>
+            <p>Slytherin:</p>
+            <p id="slytherin"></p>
+          </div>
+          <div id="updatedValues">
+            <br>
+            <p>Non-expelled students:</p>
+            <p id="nonexpelled"></p>
+            <br>
+            <p>Expelled students:</p>
+            <p id="expelled"></p>
           </div>
         </div>
       </div>
