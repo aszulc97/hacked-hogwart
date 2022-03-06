@@ -479,7 +479,7 @@ function stylePopUp(student) {
 // }
 
 function hackTheSystem() {
-  alert("yo mama");
+  // alert("yo mama");
   hack = true;
   addAgata();
   allStudents.forEach(messWithBlood);

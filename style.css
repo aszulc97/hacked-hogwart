@@ -15,13 +15,17 @@
 html {
   background-image: url("images/background.jpg");
   background-attachment: fixed;
+  height: 100%;
+  overflow: auto;
 }
 
 body {
   color: var(--darkbrown);
+  margin: 0;
+  min-height: 100%;
 }
 
-body::after {
+body::before {
   content: "";
   background-image: url("images/hogwarts.png");
   background-repeat: no-repeat;
@@ -42,6 +46,10 @@ header h1 {
   margin: 0.2rem;
 }
 
+header {
+  margin: 0 3rem;
+}
+
 main {
   display: grid;
   grid-template-columns: 2fr 5px 1fr;
@@ -60,14 +68,16 @@ h3 {
 }
 
 h5 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin: 1.6rem 0 0 0;
+  color: var(--darkbrown);
 }
 
 #rightSide {
   margin: 0 1rem;
-  background-color: rgba(255, 255, 255, 0.308);
+  background-color: #ffffff41;
   padding: 1rem;
+  min-height: 90%;
 }
 
 .hidden {
@@ -150,6 +160,9 @@ tr td {
 
 th {
   padding-bottom: 0.2rem;
+  font-size: 1.6rem;
+  background-color: #351b0767;
+  color: var(--lightbeige);
 }
 
 tbody tr {
