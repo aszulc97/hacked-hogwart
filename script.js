@@ -37,7 +37,6 @@ function start() {
   let listButtons = document.querySelectorAll(".filter");
   listButtons.forEach((btn) => {
     btn.addEventListener("click", function () {
-      console.log(this.dataset.filter);
       if (this.dataset.filter === "all") {
         filtered = allStudents;
         listButtons.forEach((btn) => (btn.disabled = false));
@@ -210,7 +209,6 @@ function updateStudentAmount() {
 }
 
 function expelStudent(student) {
-  // if (confirm("Are you sure you want to expel this student?")) {
   if (student.firstname === "Agata") {
     alert("are you insane?");
     closePopUp();
@@ -315,7 +313,6 @@ function displaySpecial(student, parent) {
 }
 
 function filteringExpelled(expelledStatus) {
-  allStudents.forEach((student) => console.log(student.expelled == expelledStatus));
   filtered = allStudents.filter((student) => String(student.expelled) == expelledStatus);
 }
 
@@ -370,8 +367,6 @@ function bloodType(student) {
     student.blood = "Muggle-born";
   }
 }
-
-//redisplay list after expell/prefect/inqu
 
 function displayList(arrayToDisplay) {
   document.querySelector("#list tbody").innerHTML = "";
