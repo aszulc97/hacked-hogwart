@@ -34,24 +34,12 @@ const settings = {
 function start() {
   console.log("ready");
   loadBloodJSON();
+
   addFilterButtonsListeners();
   addSortingListeners();
+  addSpecialFuncButtonToggle();
 
-  document.querySelector("#prefectsButton").addEventListener("click", function () {
-    document.querySelector("#inquList").classList.add("hidden");
-    document.querySelector("#prefectsList").classList.remove("hidden");
-    this.disabled = true;
-    document.querySelector("#inquButton").disabled = false;
-  });
-
-  document.querySelector("#inquButton").addEventListener("click", function () {
-    document.querySelector("#prefectsList").classList.add("hidden");
-    document.querySelector("#inquList").classList.remove("hidden");
-    this.disabled = true;
-    document.querySelector("#prefectsButton").disabled = false;
-  });
-
-  document.querySelector("input").addEventListener("input", updateResult);
+  document.querySelector("input").addEventListener("input", search);
   document.querySelector("#statisticsButton").addEventListener("click", showStatistics);
 }
 
@@ -83,16 +71,32 @@ function addSortingListeners() {
         clicked.dataset.sortDirection = "";
       }
       if (settings.sortDir) {
-        sortering(this.dataset.sort, true);
+        sorting(this.dataset.sort, true);
         settings.sortDir = false;
         this.dataset.sortDirection = "desc";
       } else {
-        sortering(this.dataset.sort);
+        sorting(this.dataset.sort);
         settings.sortDir = true;
         this.dataset.sortDirection = "asc";
       }
       clicked = this;
     });
+  });
+}
+
+function addSpecialFuncButtonToggle() {
+  document.querySelector("#prefectsButton").addEventListener("click", function () {
+    document.querySelector("#inquList").classList.add("hidden");
+    document.querySelector("#prefectsList").classList.remove("hidden");
+    this.disabled = true;
+    document.querySelector("#inquButton").disabled = false;
+  });
+
+  document.querySelector("#inquButton").addEventListener("click", function () {
+    document.querySelector("#prefectsList").classList.add("hidden");
+    document.querySelector("#inquList").classList.remove("hidden");
+    this.disabled = true;
+    document.querySelector("#prefectsButton").disabled = false;
   });
 }
 
@@ -190,7 +194,7 @@ function imageExist(url, callback) {
   }
 }
 
-function updateResult() {
+function search() {
   let searchFields = ["firstname", "lastname"];
   let query = document.querySelector("input").value.toLowerCase();
   let searchResult = filtered.filter((student) => {
@@ -359,7 +363,7 @@ function sortByProperty(array, propertyName) {
   });
 }
 
-function sortering(sortBy, reversed) {
+function sorting(sortBy, reversed) {
   filtered = sortByProperty(filtered, sortBy);
   if (reversed === true) {
     filtered = filtered.reverse();
@@ -465,12 +469,13 @@ function showPopUp(student) {
       document.querySelector(".inqu").classList.add("hidden");
     }
   }
+
   document.querySelector(".expelButton").addEventListener("click", expelListener);
   document.querySelector(".prefectButton").addEventListener("click", prefectListener);
   document.querySelector(".inquButton").addEventListener("click", squadListener);
 
   document.querySelector(".popUp .closeButton").addEventListener("click", function () {
-    closePopUp(student);
+    closePopUp();
     removeListeners();
   });
   if (student.lastname === "") {
