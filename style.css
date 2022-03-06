@@ -154,6 +154,7 @@ th {
 
 tbody tr {
   background-color: var(--lightbeige);
+  max-height: 3rem;
   border-spacing: 1rem;
   padding-bottom: 3rem;
 }
