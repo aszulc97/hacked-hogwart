@@ -478,6 +478,7 @@ function addAgata() {
   agata.lastname = "Szulc";
   agata.gender = "girl";
   agata.house = "Gryffindor";
+  agata.image = getImage(agata, agata.firstname + " " + agata.lastname);
   makeAPrefect(agata);
   allStudents.push(agata);
   fineStudents.push(agata);
