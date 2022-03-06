@@ -199,13 +199,18 @@ function updateResult() {
 
 function expelStudent(student) {
   // if (confirm("Are you sure you want to expel this student?")) {
-  student.expelled = true;
-  let index = fineStudents.indexOf(student);
-  if (index > -1) {
-    fineStudents.splice(index, 1); // 2nd parameter means remove one item only
+  if (student.firstname === "Agata") {
+    alert("are you insane?");
+    closePopUp();
+  } else {
+    student.expelled = true;
+    let index = fineStudents.indexOf(student);
+    if (index > -1) {
+      fineStudents.splice(index, 1); // 2nd parameter means remove one item only
+    }
+    expelledStudents.push(student);
+    closePopUp();
   }
-  expelledStudents.push(student);
-  closePopUp();
 }
 
 function makeAPrefect(student) {
@@ -224,13 +229,18 @@ function makeAPrefect(student) {
 
 function addToSquad(student) {
   if (!student.expelled) {
-    if (bloodType(student) === "Pure-blood" || student.house === "Slytherin") {
+    if (student.blood === "Pure-blood" || student.house === "Slytherin") {
       console.log(student);
       student.inqu = true;
       if (!inquSquad.includes(student)) {
         inquSquad.push(student);
         displaySpecial(student, "inqu");
         closePopUp();
+        if (hack) {
+          setTimeout(() => {
+            removeStudent(student, "inqu");
+          }, 2000);
+        }
       } //todo: else show info window
     } //todo: else show info
   } //todo: else info
@@ -449,6 +459,7 @@ function closePopUp() {
 // }
 
 function hackTheSystem() {
+  hack = true;
   addAgata();
   allStudents.forEach(messWithBlood);
 }
