@@ -154,22 +154,23 @@ function fixCapitalization(dataString) {
 
 function getImage(student, fullname) {
   let lastname = fullname.substring(fullname.lastIndexOf(" ") + 1).toLowerCase();
-  let imageUrl = "/images/" + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
+  let imageBase = "https://raw.githubusercontent.com/aszulc97/hacked-hogwart/master/images/";
+  let imageUrl = imageBase + lastname + "_" + fullname.charAt(0).toLowerCase() + ".png";
   imageExist(imageUrl, (exists) => {
     if (exists) {
       student.image = imageUrl;
     } else {
       if (lastname.includes("-")) {
-        imageUrl = "/images/" + lastname.substring(lastname.indexOf("-") + 1) + "_" + fullname.charAt(0).toLowerCase() + ".png";
+        imageUrl = imageBase + lastname.substring(lastname.indexOf("-") + 1) + "_" + fullname.charAt(0).toLowerCase() + ".png";
         student.image = imageUrl;
       } else {
         let firstname = fullname.substring(0, fullname.indexOf(" "));
-        imageUrl = "/images/" + lastname + "_" + firstname.toLowerCase() + ".png";
+        imageUrl = imageBase + lastname + "_" + firstname.toLowerCase() + ".png";
         imageExist(imageUrl, (existsInner) => {
           if (existsInner) {
             student.image = imageUrl;
           } else {
-            student.image = "/images/no_pic.png";
+            student.image = imageBase + "no_pic.png";
           }
         });
       }
