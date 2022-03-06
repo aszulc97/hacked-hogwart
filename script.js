@@ -12,6 +12,7 @@ const inquSquad = [];
 let filtered = [];
 let currentList = "all";
 let globalStudent;
+let hack = false;
 
 const Student = {
   firstname: "",
@@ -21,6 +22,7 @@ const Student = {
   gender: "",
   house: "",
   image: "",
+  blood: "",
   prefect: false,
   inqu: false,
   expelled: false,
@@ -119,6 +121,7 @@ function prepareObjects(jsonStudent) {
   student.gender = jsonStudent.gender;
   student.house = fixCapitalization(jsonStudent.house.trim());
   student.image = getImage(student, fullnameString);
+  bloodType(student);
 
   allStudents.push(student);
   fineStudents.push(student);
@@ -339,11 +342,11 @@ function bloodType(student) {
   console.log(student.lastname);
   console.log(halfBloodFams);
   if (halfBloodFams.includes(student.lastname)) {
-    return "Half-blood";
+    student.blood = "Half-blood";
   } else if (pureBloodFams.includes(student.lastname)) {
-    return "Pure-blood";
+    student.blood = "Pure-blood";
   } else {
-    return "Muggle-born";
+    student.blood = "Muggle-born";
   }
 }
 
@@ -410,7 +413,7 @@ function showPopUp(student) {
   document.querySelector(".popUp").classList.remove("hidden");
   document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   document.querySelector("div > h2").textContent = student.house;
-  document.querySelector("div > .blood").textContent = bloodType(student);
+  document.querySelector("div > .blood").textContent = student.blood;
   document.querySelector("img").src = student.image;
 
   //todo: make buttons hidden if student.expelled
@@ -422,7 +425,13 @@ function showPopUp(student) {
     closePopUp(student);
     removeListeners();
   });
-  document.querySelector(".popUp").addEventListener("DOMCharacterDataModified", removeListeners);
+  if (student.lastname === "") {
+    document.querySelector("img").addEventListener("dblclick", function (e) {
+      alert("yo mama");
+      hackTheSystem();
+    });
+  }
+  //document.querySelector(".popUp").addEventListener("DOMCharacterDataModified", removeListeners);
 }
 
 //expelListener = function(){};
@@ -438,3 +447,34 @@ function closePopUp() {
 //     myNode.removeChild(myNode.lastChild);
 //   }
 // }
+
+function hackTheSystem() {
+  addAgata();
+  allStudents.forEach(messWithBlood);
+}
+
+function addAgata() {
+  const agata = Object.create(Student);
+  agata.firstname = "Agata";
+  agata.lastname = "Szulc";
+  agata.gender = "girl";
+  agata.house = "Gryffindor";
+  makeAPrefect(agata);
+  allStudents.push(agata);
+  fineStudents.push(agata);
+  filtered = allStudents;
+  displayList(allStudents);
+}
+
+function messWithBlood(student) {
+  if (halfBloodFams.includes(student.lastname)) {
+    student.blood = "Pure-blood";
+  } else if (pureBloodFams.includes(student.lastname)) {
+    let bloodArray = ["Pure-blood", "Half-blood", "Muggle-born"];
+    let index = Math.floor(Math.random() * 3);
+    console.log(index);
+    student.blood = bloodArray[index];
+  } else {
+    student.blood = "Pure-blood";
+  }
+}
