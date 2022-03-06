@@ -31,19 +31,22 @@ const Student = {
 const settings = {
   sortDir: undefined,
 };
-
+//todo: disable expelled button if expelled, same for prefect/inqu
 function start() {
   console.log("ready");
   loadBloodJSON();
-
   let listButtons = document.querySelectorAll(".filter");
   listButtons.forEach((btn) => {
     btn.addEventListener("click", function () {
       console.log(this.dataset.filter);
       if (this.dataset.filter === "all") {
         filtered = allStudents;
+        listButtons.forEach((btn) => (btn.disabled = false));
+        this.disabled = true;
       } else {
         filteringExpelled(this.dataset.filter);
+        listButtons.forEach((btn) => (btn.disabled = false));
+        this.disabled = true;
       }
       currentList = this.dataset.filter;
       document.getElementById("houseDropdown").selectedIndex = 0;
@@ -357,8 +360,6 @@ function sortering(sortBy, reversed) {
 }
 
 function bloodType(student) {
-  console.log(student.lastname);
-  console.log(halfBloodFams);
   if (halfBloodFams.includes(student.lastname)) {
     student.blood = "Half-blood";
   } else if (pureBloodFams.includes(student.lastname)) {
@@ -419,7 +420,6 @@ let squadListener = function () {
 };
 
 function removeListeners() {
-  console.log("yo mama");
   document.querySelector(".expelButton").removeEventListener("click", expelListener);
   document.querySelector(".prefectButton").removeEventListener("click", prefectListener);
   document.querySelector(".inquButton").removeEventListener("click", squadListener);

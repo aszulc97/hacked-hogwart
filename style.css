@@ -89,6 +89,12 @@ h5 {
   color: var(--darkbrown);
 }
 
+input,
+select {
+  padding: 0.5rem;
+  border-radius: 15px;
+}
+
 #rightSide {
   margin: 0 1rem;
   background-color: #ffffff41;
