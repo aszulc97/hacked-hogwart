@@ -155,6 +155,10 @@ select {
   padding: 1rem;
 }
 
+.popUp button:disabled {
+  opacity: 50%;
+}
+
 .popUp div::after {
   content: "";
   background-color: #fff;

@@ -107,10 +107,8 @@ function loadJSON() {
     .then((response) => response.json())
     .then((data) => {
       data.forEach(prepareObjects);
-      // document.querySelector("button[data-filter='all']").textContent += ` (${allStudents.length})`;
       fillInStatistics();
       updateStudentAmount();
-      //todo: statistics
     });
 }
 
@@ -224,6 +222,12 @@ function expelStudent(student) {
     if (index > -1) {
       fineStudents.splice(index, 1); // 2nd parameter means remove one item only
     }
+    if (student.prefect) {
+      removeStudent(student, "prefect");
+    }
+    if (student.inqu) {
+      removeStudent(student, "inqu");
+    }
     expelledStudents.push(student);
     closePopUp();
     updateStudentAmount();
@@ -251,7 +255,6 @@ function makeAPrefect(student) {
 function addToSquad(student) {
   if (!student.expelled) {
     if (student.blood === "Pure-blood" || student.house === "Slytherin") {
-      console.log(student);
       student.inqu = true;
       if (!inquSquad.includes(student)) {
         inquSquad.push(student);
@@ -346,14 +349,8 @@ function filterHouse(house) {
       filtered = fineStudents.filter((student) => student.house === house);
       break;
   }
-  //filtered = filtered.filter((student) => student.house === house);
   displayList(filtered);
 }
-
-// function displayFiltered(animalType) {
-//   filtered = filtering(animalType);
-//   displayList(filtered);
-// }
 
 function sortByProperty(array, propertyName) {
   return array.sort(function (a, b) {
@@ -394,6 +391,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  //todo: prefect, itd icons
   if (student.prefect) {
     clone.querySelector("[data-field=prefect]").textContent = "t";
   } else {
@@ -409,7 +407,6 @@ function displayStudent(student) {
   } else {
     clone.querySelector("[data-field=expelled]").textContent = "f";
   }
-  // clone.querySelector("[data-field=image]>img").src = student.image;
   clone.querySelector("tr").addEventListener("click", function () {
     removeListeners();
     showPopUp(student);
@@ -440,7 +437,6 @@ function removeListeners() {
 }
 
 function showPopUp(student) {
-  // e.preventDefault();
   globalStudent = student;
   document.querySelector(".popUp").classList.remove("hidden");
   document.querySelector("div > h1").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
@@ -448,11 +444,38 @@ function showPopUp(student) {
   document.querySelector("div > .blood").textContent = student.blood;
   document.querySelector("img").src = student.image;
   stylePopUp(student);
-  //todo: make buttons hidden if student.expelled
 
+  if (student.expelled) {
+    document.querySelector(".expelButton").disabled = true;
+    document.querySelector(".prefectButton").disabled = true;
+    document.querySelector(".inquButton").disabled = true;
+    document.querySelector(".inqu").classList.add("hidden");
+    document.querySelector(".prefect").classList.add("hidden");
+    document.querySelector(".expelled").classList.remove("hidden");
+  } else {
+    document.querySelector(".expelButton").disabled = false;
+    document.querySelector(".prefectButton").disabled = false;
+    document.querySelector(".inquButton").disabled = false;
+    document.querySelector(".expelled").classList.add("hidden");
+    if (student.prefect) {
+      document.querySelector(".prefectButton").disabled = true;
+      document.querySelector(".prefect").classList.remove("hidden");
+    } else {
+      document.querySelector(".prefectButton").disabled = false;
+      document.querySelector(".prefect").classList.add("hidden");
+    }
+    if (student.inqu) {
+      document.querySelector(".inquButton").disabled = true;
+      document.querySelector(".inqu").classList.remove("hidden");
+    } else {
+      document.querySelector(".inquButton").disabled = false;
+      document.querySelector(".inqu").classList.add("hidden");
+    }
+  }
   document.querySelector(".expelButton").addEventListener("click", expelListener);
   document.querySelector(".prefectButton").addEventListener("click", prefectListener);
   document.querySelector(".inquButton").addEventListener("click", squadListener);
+
   document.querySelector(".popUp .closeButton").addEventListener("click", function () {
     closePopUp(student);
     removeListeners();
@@ -462,11 +485,7 @@ function showPopUp(student) {
       hackTheSystem();
     });
   }
-
-  //document.querySelector(".popUp").addEventListener("DOMCharacterDataModified", removeListeners);
 }
-
-//expelListener = function(){};
 
 function closePopUp() {
   document.querySelector(".popUp").classList.add("hidden");
