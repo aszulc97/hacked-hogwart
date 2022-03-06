@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Bevan&display=swap");
+
 @font-face {
   font-family: "Parry Hotter";
   src: url("ParryHotter.ttf") format("truetype");
@@ -293,6 +295,14 @@ th[data-sort-direction="desc"]::after {
 
 th[data-sort-direction=""]::after {
   content: "";
+}
+
+td[data-field="prefect"],
+td[data-field="inqu"],
+td[data-field="expelled"] {
+  font-family: "Bevan";
+  color: var(--darkbrown);
+  text-align: center;
 }
 
 .hidden {
