@@ -262,3 +262,24 @@ th[data-sort-direction=""]::after {
 #removeButton {
   height: 100%;
 }
+
+@keyframes blink {
+  from {
+    opacity: 100%;
+  }
+  25% {
+    opacity: 20%;
+  }
+  50% {
+    opacity: 80%;
+  }
+  75% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0;
+  }
+  to {
+    opacity: 100%;
+  }
+}

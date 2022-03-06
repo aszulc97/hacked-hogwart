@@ -483,9 +483,11 @@ function hackTheSystem() {
   hack = true;
   addAgata();
   allStudents.forEach(messWithBlood);
+  document.body.style.animation = "blink 0.5s steps(4, end)";
   document.body.style.color = "#3fc871";
   document.body.style.backgroundColor = "#000";
   document.documentElement.style.setProperty("--lightbeige", "#666");
+  document.documentElement.style.setProperty("--darkbrown", "#3fc871");
 }
 
 function addAgata() {
