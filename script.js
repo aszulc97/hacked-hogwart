@@ -230,6 +230,7 @@ function expelStudent(student) {
     closePopUp();
     updateStudentAmount();
   }
+  dropdown();
 }
 
 function makeAPrefect(student) {
@@ -249,6 +250,7 @@ function makeAPrefect(student) {
     } else {
       alert("There can be only 2 prefects within one house.");
     }
+    dropdown();
   }
 }
 
@@ -273,6 +275,7 @@ function addToSquad(student) {
     } else {
       alert("Student has to be of pure-blood or from Slytherin to be able to join the squad.");
     }
+    dropdown();
   }
 }
 
@@ -291,6 +294,7 @@ function removeStudent(student, specialFunction) {
     document.querySelector("#inquMembers").innerHTML = "";
     inquSquad.forEach((student) => displaySpecial(student, "inqu"));
   }
+  dropdown();
 }
 
 function displaySpecial(student, parent) {
@@ -380,7 +384,6 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=house]").textContent = student.house;
-  //todo: prefect, itd icons
   if (student.prefect) {
     clone.querySelector("[data-field=prefect]").textContent = "P";
   } else {
