@@ -222,6 +222,10 @@ function makeAPrefect(student) {
         prefects.push(student);
         displaySpecial(student, "prefect");
         closePopUp();
+        document.querySelector("#inquList").classList.add("hidden");
+        document.querySelector("#prefectsList").classList.remove("hidden");
+        document.querySelector("#prefectsButton").disabled = true;
+        document.querySelector("#inquButton").disabled = false;
       } //todo: else show info window
     } //todo: else show info
   } //todo: else info
@@ -236,6 +240,10 @@ function addToSquad(student) {
         inquSquad.push(student);
         displaySpecial(student, "inqu");
         closePopUp();
+        document.querySelector("#prefectsList").classList.add("hidden");
+        document.querySelector("#inquList").classList.remove("hidden");
+        document.querySelector("#inquButton").disabled = true;
+        document.querySelector("#prefectsButton").disabled = false;
         if (hack) {
           setTimeout(() => {
             removeStudent(student, "inqu");
