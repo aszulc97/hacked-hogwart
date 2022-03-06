@@ -3,9 +3,41 @@
   src: url("ParryHotter.ttf") format("truetype");
 }
 
+:root {
+  --gryffindor: #7f0909;
+  --hufflepuff: #ffdb00;
+  --ravenclaw: #000a90;
+  --slytherin: #0d6217;
+  --darkbrown: #351b07;
+  --lightbeige: #efdcb4;
+}
+
+html {
+  background-image: url("images/background.jpg");
+  background-attachment: fixed;
+}
+
+body {
+  color: var(--darkbrown);
+}
+
+body::after {
+  content: "";
+  background-image: url("images/hogwarts.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5;
+  top: 10rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
+}
+
 header h1 {
   font-family: "Parry Hotter";
-  font-size: 2rem;
+  font-size: 5rem;
   text-align: center;
   margin: 0.2rem;
 }
@@ -14,7 +46,28 @@ main {
   display: grid;
   grid-template-columns: 2fr 5px 1fr;
   margin: 0 5rem;
-  background-color: #eee;
+  /* background-color: #eee; */
+}
+
+button {
+  background-color: var(--lightbeige);
+  cursor: pointer;
+}
+
+h3 {
+  font-size: 2rem;
+  margin: 0.4rem 0;
+}
+
+h5 {
+  font-size: 1.5rem;
+  margin: 1.6rem 0 0 0;
+}
+
+#rightSide {
+  margin: 0 1rem;
+  background-color: rgba(255, 255, 255, 0.308);
+  padding: 1rem;
 }
 
 .hidden {
@@ -26,11 +79,13 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 0.1rem solid pink;
+  border: 0.1rem solid #351b07;
   border-radius: 5%;
-  background-color: #fff;
   padding: 2rem;
   min-width: 30%;
+  /* background-image: url("images/background.jpg"); */
+  background-color: var(--lightbeige);
+  overflow: hidden;
 }
 
 .popupContent {
@@ -43,10 +98,39 @@ main {
   flex-direction: column;
   gap: 1rem;
   justify-content: space-between;
+  position: relative;
+}
+
+.crestHolder {
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 30%;
+  z-index: -1;
+  width: 80%;
+  height: 150%;
+  position: absolute;
+  right: -20%;
+  top: -15%;
 }
 
 .popUp * {
   margin: 0;
+}
+
+.popUp div {
+  padding: 1rem;
+}
+
+.popUp div::after {
+  content: "";
+  background-color: #fff;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
 }
 
 main {
@@ -69,7 +153,7 @@ th {
 }
 
 tbody tr {
-  background-color: #fff;
+  background-color: var(--lightbeige);
   border-spacing: 1rem;
   padding-bottom: 3rem;
 }
@@ -96,32 +180,26 @@ tbody tr:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-/* 
-.closeButton {
-  margin-top: 1rem;
-  margin-bottom: 0;
-  font-size: 1rem;
-  background-color: pink;
-  border: 0.5px solid #888;
-  border-radius: 0.9rem;
-  padding: 0.4rem 0.6rem;
-} */
+
 .closeButton {
   position: absolute;
   top: 0;
   right: 0;
   border-radius: 100%;
   border: 0.5px solid #ddd;
+  width: 5%;
+  height: 7%;
 }
 
 .closeButton:after {
   display: inline-block;
   content: "\00d7"; /* This will render the 'X' */
+  transform: scale(1.5);
 }
 
 .vl {
-  border-left: 5px solid #ddd;
-  height: 500px;
+  border-left: 5px solid var(--lightbeige);
+  height: 100%;
   top: 0;
 }
 
@@ -161,7 +239,10 @@ th[data-sort-direction=""]::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 2rem 0 2rem;
+  margin: 0.5rem;
+  background-color: var(--lightbeige);
+  padding: 0.5rem 2rem;
+  border-radius: 15px;
 }
 
 #removeButton {

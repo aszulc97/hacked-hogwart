@@ -433,7 +433,7 @@ function showPopUp(student) {
   document.querySelector("div > h2").textContent = student.house;
   document.querySelector("div > .blood").textContent = student.blood;
   document.querySelector("img").src = student.image;
-
+  stylePopUp(student);
   //todo: make buttons hidden if student.expelled
 
   document.querySelector(".expelButton").addEventListener("click", expelListener);
@@ -445,10 +445,10 @@ function showPopUp(student) {
   });
   if (student.lastname === "") {
     document.querySelector("img").addEventListener("dblclick", function (e) {
-      alert("yo mama");
       hackTheSystem();
     });
   }
+
   //document.querySelector(".popUp").addEventListener("DOMCharacterDataModified", removeListeners);
 }
 
@@ -459,6 +459,18 @@ function closePopUp() {
   console.log("close");
 }
 
+function stylePopUp(student) {
+  document.querySelector(".crestHolder").style.backgroundImage = `url("images/${student.house.toLowerCase()}.png")`;
+  document.querySelectorAll(".popUp button").forEach((button) => {
+    button.style.backgroundColor = `var(--${student.house.toLowerCase()})`;
+    if (student.house === "Hufflepuff") {
+      button.style.color = "#000";
+    } else {
+      button.style.color = "#fff";
+    }
+  });
+}
+
 // function clearList() {
 //   const myNode = document.getElementById("list");
 //   while (myNode.childNodes.length > 3) {
@@ -467,6 +479,7 @@ function closePopUp() {
 // }
 
 function hackTheSystem() {
+  alert("yo mama");
   hack = true;
   addAgata();
   allStudents.forEach(messWithBlood);
