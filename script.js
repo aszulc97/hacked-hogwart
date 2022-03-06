@@ -34,6 +34,28 @@ const settings = {
 function start() {
   console.log("ready");
   loadBloodJSON();
+  addFilterButtonsListeners();
+  addSortingListeners();
+
+  document.querySelector("#prefectsButton").addEventListener("click", function () {
+    document.querySelector("#inquList").classList.add("hidden");
+    document.querySelector("#prefectsList").classList.remove("hidden");
+    this.disabled = true;
+    document.querySelector("#inquButton").disabled = false;
+  });
+
+  document.querySelector("#inquButton").addEventListener("click", function () {
+    document.querySelector("#prefectsList").classList.add("hidden");
+    document.querySelector("#inquList").classList.remove("hidden");
+    this.disabled = true;
+    document.querySelector("#prefectsButton").disabled = false;
+  });
+
+  document.querySelector("input").addEventListener("input", updateResult);
+  document.querySelector("#statisticsButton").addEventListener("click", showStatistics);
+}
+
+function addFilterButtonsListeners() {
   let listButtons = document.querySelectorAll(".filter");
   listButtons.forEach((btn) => {
     btn.addEventListener("click", function () {
@@ -51,7 +73,9 @@ function start() {
       displayList(filtered);
     });
   });
+}
 
+function addSortingListeners() {
   let allHeaders = document.querySelectorAll("th[data-action='sort']");
   allHeaders.forEach((th) => {
     th.addEventListener("click", function () {
@@ -70,23 +94,6 @@ function start() {
       clicked = this;
     });
   });
-
-  document.querySelector("#prefectsButton").addEventListener("click", function () {
-    document.querySelector("#inquList").classList.add("hidden");
-    document.querySelector("#prefectsList").classList.remove("hidden");
-    this.disabled = true;
-    document.querySelector("#inquButton").disabled = false;
-  });
-
-  document.querySelector("#inquButton").addEventListener("click", function () {
-    document.querySelector("#prefectsList").classList.add("hidden");
-    document.querySelector("#inquList").classList.remove("hidden");
-    this.disabled = true;
-    document.querySelector("#prefectsButton").disabled = false;
-  });
-
-  document.querySelector("input").addEventListener("input", updateResult);
-  document.querySelector("#statisticsButton").addEventListener("click", showStatistics);
 }
 
 function loadBloodJSON() {
@@ -133,7 +140,6 @@ function prepareObjects(jsonStudent) {
 function fixCapitalization(dataString) {
   let charArray = dataString.toLowerCase().split("");
   charArray[0] = charArray[0].charAt(0).toUpperCase();
-
   for (let i = 0; i < charArray.length + 1; i++) {
     if (charArray[i] === " " || charArray[i] === "-" || charArray[i] === '"') {
       charArray[i + 1] = charArray[i + 1].charAt(0).toUpperCase();
@@ -228,6 +234,7 @@ function expelStudent(student) {
     closePopUp();
     updateStudentAmount();
   }
+  filteringExpelled(currentList);
   dropdown();
 }
 
@@ -313,7 +320,9 @@ function displaySpecial(student, parent) {
 }
 
 function filteringExpelled(expelledStatus) {
-  filtered = allStudents.filter((student) => String(student.expelled) == expelledStatus);
+  if (expelledStatus != "all") {
+    filtered = allStudents.filter((student) => String(student.expelled) == expelledStatus);
+  }
 }
 
 function dropdown() {
@@ -475,6 +484,7 @@ function closePopUp() {
   document.querySelector(".popUp").classList.add("hidden");
 }
 
+//style pop-up window accordingly to student's house
 function stylePopUp(student) {
   document.querySelector(".crestHolder").style.backgroundImage = `url("images/${student.house.toLowerCase()}.png")`;
   document.querySelectorAll(".popUp button").forEach((button) => {
@@ -491,6 +501,10 @@ function hackTheSystem() {
   hack = true;
   addAgata();
   allStudents.forEach(messWithBlood);
+  hackTheStyle();
+}
+
+function hackTheStyle() {
   document.body.style.animation = "blink 0.5s steps(4, end)";
   document.body.style.color = "#3fc871";
   document.body.style.backgroundColor = "#000";
